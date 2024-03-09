@@ -1,10 +1,15 @@
 import React from "react";
-import sortIcon from "../../assets/sort.svg";
-import { IList } from "./type";
+import { IProductData } from "../../shared/list.type";
+import { sortByData } from "./helper";
+import { IList, productKeys } from "./type";
 import Checkbox from "../Checkbox";
+import sortIcon from "../../assets/sort.svg";
+import editIcon from "../../assets/edit.svg";
 
 function List(props: IList) {
-  const { id, className, data, config, isSelectable, onSelectRow } = props;
+  const { id, className, data, config, isSelectable, onSelectRow, canEdit, handleEdit } = props;
+  const [rowData, setRowData] = React.useState<Partial<IProductData[]>>();
+
   const [selectAll, setSelectAll] = React.useState<boolean>(false);
   const [selectedRows, setSelectedRows] = React.useState<string[]>([]);
 
@@ -15,6 +20,7 @@ function List(props: IList) {
     }
   }, []);
 
+
   React.useEffect(() => {
    if (selectedRows.length) onSelectRow?.(selectedRows);
   }, [selectedRows, onSelectRow]);
@@ -22,49 +28,87 @@ function List(props: IList) {
 
   React.useEffect(() => {
     if(selectAll) {
-     const rows = data.map((_, idx) => idx.toString());
-     setSelectedRows(rows);
+     const rows = rowData?.map((_, idx) => idx.toString());
+     setSelectedRows(rows || []);
     }
-  }, [selectAll])
+  }, [selectAll]);
 
-  const renderListItem = () => {
-    const withSelectableRows = [...config];
+
+  React.useEffect(() => {
+   if (data.length) {
+     setRowData(() => data);
+   }
+  }, [data]);
+
+
+
+
+  // render row with selectable and action functionality
+
+  const withSelector = (config: IList['config']) => {
+    const _config = [...config];
     if (isSelectable) {
-      const render = (data: IList["data"][number], properties: any) => (
+      const render = (_: IList["data"][number], properties: any) => (
         <Checkbox
           id={`selector-idx-${properties?.rowIdx?.toString()}}`}
           onChecked={(isChecked) =>
-            handleSelectedRows(properties?.rowIdx as string, isChecked)
+            handleSelectedRows(_.id as string, isChecked)
           }
-          isChecked={selectedRows.includes(properties?.rowIdx)}
+          isChecked={selectedRows.includes(_.id)}
         />
       );
-      withSelectableRows.unshift({ id: "selector", render });
+      _config.unshift({ accessor: "selector", render });
     }
 
-    return data.map((listItem, idx) => {
-      return withSelectableRows.map(({ id, rowClassName, render }) => {
-        if (render) {
-          return render(listItem, { rowIdx: idx.toString() });
-        }
+    return _config;
+  }
+
+  const withActions = (config: IList['config']) => {
+   const _config = [...config];
+    if (canEdit) {
+     const render = (_data: IList["data"][number], customProperties:any) => (
+       <div className="edit flex justify-center items-center cursor-pointer hover:scale-[1.5]" onClick={() => handleEdit?.(_data, customProperties)}>
+        <img src={editIcon} height={15} width={15} />
+       </div>
+     );
+
+     _config.push({ accessor: 'edit', render });
+
+    }
+
+   return _config;
+  };
+
+  
+  const renderListItem = () => {
+    const withSelectableRows = withSelector(config);
+    const withActionItem = withActions(withSelectableRows);
+    
+    return rowData?.map((row, idx) => {
+      return withActionItem.map(({ accessor, rowClassName, render }) => {
         return (
           <div
             className={`px-2 max-w-10 font-[500] text-center truncate ${rowClassName}`}
             id={id}
           >
-            {listItem[id as keyof typeof listItem]}
+            {render?.(row as IProductData, { rowIdx: idx.toString() }) || row?.[accessor as keyof typeof row]}
           </div>
         );
       });
     });
   };
 
+  const handleSort = (field: string | number) => {
+    const sortedData = sortByData(rowData as IProductData[], field as productKeys);
+    setRowData(() => sortedData);
+  }
+ 
   const renderListHeader = () => {
-    return config.map(({ header, isSortable }) => (
+    return config.map(({ header, isSortable, accessor }) => (
       <div className="flex flex-1 items-center justify-start gap-1 bg-[#fbfcfe] cursor-pointer hover:[&>img]:block">
         <div className="text-sm font-normal truncate text-left">{header}</div>
         {isSortable && (
-          <div className="hidden">
+          <div className="hidden" onClick={() => handleSort(accessor)}>
             <img src={sortIcon} height={20} width={20} />
           </div>
         )}
@@ -78,6 +122,7 @@ function List(props: IList) {
       id={id}
     >
       <div className={`grid row-span-[${config.length}] fixed p-4`}>
+        { /* render header with selectable functionality */}
         {isSelectable && (
           <Checkbox
             id="header-checkbox"
@@ -86,7 +131,7 @@ function List(props: IList) {
           />
         )}
         {renderListHeader()}
-        {renderListItem()}
+        {renderListItem() || <div className="text-base text-center m-auto p-3">No data found</div>}
       </div>
     </div>
   );

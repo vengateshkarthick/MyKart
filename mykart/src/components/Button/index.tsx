@@ -1,13 +1,5 @@
 import React from "react";
-
-interface IButton {
-  variant: "filled" | "ghost" | "outlined";
-  code: "primary" | "danger" | "success";
-  className?: string;
-  onClick: () => void;
-  disabled?: boolean;
-  size?: "md" | "lg" | "xl" | "xs" | "sm";
-}
+import { IButton } from './types'
 
 const constructStyles = ({
   variant = "filled",
@@ -55,7 +47,7 @@ const constructStyles = ({
 };
 function Button(props: IButton) {
   return (
-    <div className="h-auto w-auto">
+    <div className="h-full w-full">
       <button
         className={constructStyles(props)}
         disabled={props.disabled}
@@ -65,7 +57,12 @@ function Button(props: IButton) {
         }}
         tabIndex={-1}
         type="button"
-      ></button>
+      >
+        <div className="flex justify-center items-center gap-1">
+          {props.label && <div className="text-sm">{props.label}</div>}
+          {props.icon && <img src={props.icon} height={15} width={15} alt="btn-icon"/>}
+        </div>
+      </button>
     </div>
   );
 }

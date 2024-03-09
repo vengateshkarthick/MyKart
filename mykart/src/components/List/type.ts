@@ -4,7 +4,7 @@ interface IListData extends  IProductData {}
 
 export interface IListConfig {
   header?: string;
-  id: string;
+  accessor: string;
   render?: (data: IListData, customProperties?: any) => React.ReactNode | string | null;
   isSortable?: boolean;
   hasFilter?: boolean;
@@ -15,7 +15,11 @@ export interface IList {
   config: Array<IListConfig>;
   data: Array<IListData>;
   id: string;
-  className: string;
+  className?: string;
   isSelectable?: boolean;
   onSelectRow?: (id: string[]) => void; 
+  canEdit?: boolean
+  handleEdit?: (data: IListData, customProperties?: any) => void;
 }
+
+export type productKeys = keyof IProductData;

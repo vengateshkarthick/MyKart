@@ -1,15 +1,34 @@
-import { useState } from 'react'
-import './App.css'
+import React from "react";
+import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-       </div>
-    </>
-  )
+    <div className="h-full w-full">
+      <Outlet />
+      <ToastContainer />
+    </div>
+  );
 }
 
-export default App
+const routes = createBrowserRouter([
+  {
+    path: "/",
+    element: <App />,
+    children: [
+      {
+        path: "/home",
+        element: <div>Product List</div>,
+      },
+      {
+        path: "/:id",
+        element: <div>Form</div>,
+      },
+    ],
+  },
+]);
+
+export default function () {
+  return <RouterProvider router={routes} />;
+}
