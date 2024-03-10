@@ -19,10 +19,10 @@ function ProductList() {
 
   // updating store with local json data
   React.useEffect(() => {
-    if (dispatch) {
+    if (dispatch && !product?.length) {
       dispatch(setInitialProductList(getApiData()));
     }
-  }, [dispatch]);
+  }, [dispatch, product]);
 
   React.useEffect(() => {
     if (product) {

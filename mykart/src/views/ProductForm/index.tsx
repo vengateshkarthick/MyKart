@@ -41,8 +41,7 @@ function CreateOrEditProduct() {
     }
   }, [selectedProduct]);
 
-  const createProduct = React.useCallback(() => {
-
+  const createProduct = () => {
     dispatch(addProduct(formData));
     toast("Successfully added a product", {
       position: "top-right",
@@ -50,8 +49,8 @@ function CreateOrEditProduct() {
       type: "success",
       autoClose: 2000
     });
-    navigate("/home", { replace : true});
-  }, [dispatch]);
+    navigate("/home", { replace : true });
+  };
 
 
 
@@ -90,7 +89,7 @@ function CreateOrEditProduct() {
   const handleNumericInput: React.KeyboardEventHandler<
     Omit<HTMLInputElement, "date">
   > = (e) => {
-    if (e.keyCode >= 48 && e.keyCode <= 57) {
+    if (+e.which >= 48 && +e.which <= 57) {
       return true;
     }
 

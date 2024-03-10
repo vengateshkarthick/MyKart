@@ -50,7 +50,7 @@ function Dropdown({
     if (!isDropdownOpen) {
       onSelect(selectedOption);
     }
-  }, [isDropdownOpen, selectedOption]);
+  }, [isDropdownOpen]);
 
   const optionsLabel = selectedOption?.map((item) => item.label);
 
