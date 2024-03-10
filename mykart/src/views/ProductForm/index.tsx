@@ -1,13 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { IProductData } from "../../shared/list.type";
 import { fetchProductDetails } from "../../reducer/store";
+import Button from "../../components/Button";
 import TextArea from "../../components/TextInput";
 import Dropdown from "../../components/Dropdown";
-import { catogeries } from "../../shared/constants/categories";
-import Button from "../../components/Button";
 import CalendarPicker from "../../components/CalendarPicker";
+import { catogeries } from "../../shared/constants/categories";
+import addProductIcon from "../../assets/formImg.jpg";
+import { IProductData } from "../../shared/list.type";
 
 function CreateOrEditProduct() {
   const [formData, setFormData] = React.useState<Record<string, any>>({});
@@ -16,7 +17,9 @@ function CreateOrEditProduct() {
   const { selectedProduct } = useSelector((state) => state) as {
     selectedProduct: IProductData;
   };
+
   const filterOptions = React.useMemo(() => catogeries, []);
+
   const [filter, setFilter] = React.useState<
     { id: string; label: string }[] | null
   >([]);
@@ -58,19 +61,24 @@ function CreateOrEditProduct() {
   };
 
   const submuitBtnLabel = selectedProduct?.id ? "Update" : "Save";
-  
+
   const today = new Date().toISOString().slice(0, 10);
 
-  const handleNumericInput:  React.KeyboardEventHandler<Omit<HTMLInputElement, "date">> = (e) => {
-    if(e.keyCode >=48 && e.keyCode <= 57) {
+  const handleNumericInput: React.KeyboardEventHandler<
+    Omit<HTMLInputElement, "date">
+  > = (e) => {
+    
+    if (e.keyCode >= 48 && e.keyCode <= 57) {
       return true;
     }
+
     return false;
-  }
+  };
+
   return (
     <div className="h-[70vh] flex border border-zinc-100 mx-auto container">
       <div className="h-full w-1/2">
-        <img src="" alt="add product" className="h-full w-full" />
+        <img src={addProductIcon} alt="add product" className="h-full w-full" />
       </div>
       <form
         className="form flex flex-col gap-2 h-[80%] overflow-y-auto"
@@ -93,10 +101,10 @@ function CreateOrEditProduct() {
           key="category"
         />
 
-        <CalendarPicker 
-           date={formData?.expiry || today }
-           onSelect={(date) => handleFormChange("expiry", date)}
-           label="Expiry date"
+        <CalendarPicker
+          date={formData?.expiry || today}
+          onSelect={(date) => handleFormChange("expiry", date)}
+          label="Expiry date"
         />
 
         <div className="h-auto w-full flex justify-between items-center flex-wrap">
@@ -108,7 +116,6 @@ function CreateOrEditProduct() {
             inputMode="decimal"
             onKeyDown={handleNumericInput}
             required
-
           />
 
           <TextArea
@@ -140,7 +147,6 @@ function CreateOrEditProduct() {
           inputMode="decimal"
           pattern="+[\d]"
           readOnly
-         
         />
 
         <Button
