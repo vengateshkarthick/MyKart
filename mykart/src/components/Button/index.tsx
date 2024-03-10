@@ -14,7 +14,7 @@ const constructStyles = ({
     lg: 5,
     xl: 6,
   };
-  const common = `text-center ${
+  const common = `text-center p-${
     pad[size || "md"]
   } font-normal text-base cursor-pointer focus:outline-none outline-none`;
   const button_variants = {
@@ -33,7 +33,7 @@ const constructStyles = ({
     },
     success: {
       filled:
-        "bg-emerald-400 text-emerald-200 rounded border-1 border-emerald-400",
+        "bg-emerald-400 text-emerald-200 rounded text-white border-1 border-emerald-400",
       outlined:
         "border border-1 rounded border-emerald-400 bg-[#fff] text-emerald-400",
       ghost:
@@ -42,12 +42,12 @@ const constructStyles = ({
   };
 
   return `${button_variants[code][variant]} ${common} ${
-    disabled ? "backdrop-blur-md cursor-not-allowed" : "opacity-100"
+    disabled ? "opacity-50 cursor-not-allowed" : "opacity-100"
   }`;
 };
 function Button(props: IButton) {
   return (
-    <div className="h-full w-full">
+    <div className="h-auto w-auto">
       <button
         className={constructStyles(props)}
         disabled={props.disabled}
@@ -59,7 +59,7 @@ function Button(props: IButton) {
         type={props.isSubmitBtn ? "submit" :"button"}
       >
         <div className="flex justify-center items-center gap-1">
-          {props.label && <div className="text-sm">{props.label}</div>}
+          {props.label && <div className="text-sm truncate max-w-40">{props.label}</div>}
           {props.icon && <img src={props.icon} height={15} width={15} alt="btn-icon"/>}
         </div>
       </button>

@@ -14,7 +14,7 @@ function CreateOrEditProduct() {
   const [formData, setFormData] = React.useState<Record<string, any>>({});
   const { id } = useParams();
   const dispatch = useDispatch();
-  const { selectedProduct } = useSelector((state) => state) as {
+  const { selectedProduct } = useSelector((state:any) => state?.prodcutStore) as {
     selectedProduct: IProductData;
   };
 

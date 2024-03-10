@@ -22,18 +22,18 @@ export const config = [
         isSortable: true,
     }, 
     {
-        accessor: 'Selling Price',
-        header: "sp",
+       header: 'Selling Price',
+        accessor: "sp",
         isSortable: true,
     },
     {
-        accessor: 'Discount',
-        header: "discount_percentage",
+        header: 'Discount',
+        accessor: "discount_percentage",
         isSortable: true,
     }, 
     {
-        accessor: 'Cost Price',
-        header: "cp",
+        accessor: 'cp',
+        header: "Cost Price",
         isSortable: true,
     },
     {

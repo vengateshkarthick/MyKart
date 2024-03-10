@@ -1,7 +1,6 @@
 import React from "react";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import "./App.css";
 import ProductList from "./views/ProductList";
 
 function App() {

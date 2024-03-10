@@ -4,19 +4,19 @@ import { ICheckbox } from "./type";
 function Checkbox({ label, id, onChecked, isChecked, className }: ICheckbox) {
   return (
     <div
-      className={`flex justify-start items-center gap-2 h-full w-full cursor-pointer ${className}`}
+      className={`relative flex justify-start items-center gap-2 w-auto h-auto   ${className}`}
     >
-      {label && <label className="text-sm font-normal font-[Poppins] w-auto" htmlFor={id}>{label}</label>}
       <input
         type="checkbox"
         id={id}
-        className="h-3 w-3 accent-emerald-400 text-[#fff] border border-slate-200 rounded focus:border-blue-700 outline-none"
+        className="cursor-pointer h-[20px] w-[20px] border border-slate-200 rounded-md  focus:border-blue-700 outline-none"
         onChange={(e) => {
           onChecked(e.target.checked);
         }}
         value={isChecked.toString()}
         checked={isChecked}
       />
+      {label && <label className="text-sm font-normal font-[Poppins] w-auto" htmlFor={id}>{label}</label>}
     </div>
   );
 }

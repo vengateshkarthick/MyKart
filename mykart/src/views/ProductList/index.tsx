@@ -4,15 +4,12 @@ import { useDispatch, useSelector } from "react-redux";
 import Table from "../../components/List";
 import FilterBar from "./FilterBar";
 import { IProductData } from "../../shared/list.type";
-import { deleteProduct, setInitalProductList } from "../../reducer/store";
+import { deleteProduct, setInitialProductList } from "../../reducer/store";
 import { config, getApiData } from "./helper";
 import ConfirmationModal from "../../components/ConfirmationModal";
 
 function ProductList() {
-  const { product } = useSelector((state) => state) as {
-    product: IProductData[];
-  };
-
+  const  product = useSelector((state:any) => state?.prodcuts?.product)
   const [productCopy, setProductCopy] = React.useState<IProductData[]>();
   const [selectedId, setSelectedId] = React.useState<string[]>([]);
   const [showModal, setShowModal] = React.useState<boolean>(false);
@@ -21,7 +18,9 @@ function ProductList() {
 
   // updating store with local json data
   React.useEffect(() => {
-    dispatch(setInitalProductList(getApiData()));
+    if (dispatch) {
+      dispatch(setInitialProductList(getApiData()));
+    }
   }, [dispatch]);
 
   React.useEffect(() => {
@@ -39,7 +38,7 @@ function ProductList() {
   }
 
   return (
-    <div className="h-[100vh] w-[100vw] flex flex-col gap-2">
+    <div className="h-[100vh] w-[100vw] flex flex-col gap-2 container mx-auto">
       <FilterBar
         products={productCopy || []}
         setProducts={(prdts) => setProductCopy(prdts)}

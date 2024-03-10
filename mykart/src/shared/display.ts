@@ -3,6 +3,11 @@ const getRedableText = (text: string) =>
 
 
 export const conjuctStrings = (text: string[]) => {
- const readabLeText = text.map(getRedableText);
- return `${readabLeText.slice(0, readabLeText.length - 2).join(",")} and ${readabLeText[readabLeText.length - 1]}`
+ const readableText = text?.map(getRedableText);
+  if (readableText.length) {
+    if (readableText.length <= 3) return readableText.slice(0).join(", ")
+    return `${readableText.slice(0, readableText.length - 2).join(", ")} and ${readableText[readableText.length - 1]}`
+  }
+  return ''
+ 
 }
