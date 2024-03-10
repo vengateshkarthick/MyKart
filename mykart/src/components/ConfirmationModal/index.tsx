@@ -12,23 +12,36 @@ function ConfirmationModal({
 }: IModal) {
   return (
     open && (
-      <div role="dialog" className="transition-all z-20 border rounded shadow-xl relative flex m-auto gap-4 p-4 items-center justify-start h-auto w-[450px] bg-[#fff]">
-        <button type="button" onClick={onClose}>
-          <img
-            src={closeIcon}
-            alt="close"
-            className="absolute right-4 top-4 hover:bg-slate-100"
-          />
-        </button>
-        <div className="text-sm font-[500]">{header}</div>
-        {subText && <div className="text-slate-400 text-sm">{subText}</div>}
-        <div className="bottom-0 flex justify-end gap-2 w-full">
-          <Button
-            code="danger"
-            variant="outlined"
-            onClick={handleConfirm}
-            label="Confirm"
-          />
+      <div className="bg-[#ffffff66] h-full w-full absolute z-20">
+        <div
+          role="dialog"
+          className="transition-all h-auto w-[35vw]  border border-emerald-300 rounded-md shadow-xl absolute m-auto top-[22%] left-[30%] flex flex-col p-4 items-center justify-start   bg-[#fff]"
+        >
+          {/* <button type="button" onClick={onClose} className="absolute right-3 top-[3px] p-2 rounded-full border border-[#fff] hover:bg-emerald-300">
+            <img
+              src={closeIcon}
+              alt="close"
+              className=""
+              height={20}
+              width={20}
+            />
+          </button> */}
+          <div className="text-sm font-normal w-full text-left truncate my-3 text-emerald-400">{header}</div>
+          {subText && <div className="text-sm text-emerald-400">{subText}</div>}
+          <div className="relative flex justify-end gap-2 w-full my-3">
+            <Button 
+              code="danger"
+              variant="outlined"
+              onClick={onClose}
+              label="Cancel"
+            />
+            <Button
+              code="success"
+              variant="filled"
+              onClick={handleConfirm}
+              label="Confirm"
+            />
+          </div>
         </div>
       </div>
     )

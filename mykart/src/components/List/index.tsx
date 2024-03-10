@@ -37,10 +37,16 @@ function List(props: IList) {
   }, [selectedRows, onSelectRow]);
 
   React.useEffect(() => {
-    if (selectAll) {
-      const rows = rowData?.map((_, idx) => idx.toString());
-      setSelectedRows(rows || []);
+    if (rowData) {
+      if (selectAll) {
+        const rows:any = rowData.map((item) => item?.id);
+        setSelectedRows(rows || []);
+      }
+      else if(selectedRows.length && !selectAll) {
+        setSelectedRows(() => []);
+      }
     }
+    
   }, [selectAll]);
 
   React.useEffect(() => {
@@ -117,22 +123,23 @@ function List(props: IList) {
       field as productKeys,
       isDateColumn
     );
-    setRowData(() => sortedData);
+    setRowData(() => [...sortedData as IProductData[]]);
   };
 
   const renderListHeader = () => {
-    return config.map(({ header, isSortable, accessor, isDateColumn }) => (
-      <div className="flex justify-start items-center gap-2 p-2">
+    return config.map(({ header, canSort, accessor, isDateColumn }) => (
+      <div className="flex justify-start items-center gap-2 p-2 hover:bg-orange-200">
         <div className="text-sm font-normal truncate text-left">
           {header}
         </div>
-        {isSortable && (
-          <div
-            className="hidden"
+        {canSort && (
+          <button
+            className="w-auto h-auto hover:scale-[1.735] transition  ease-out delay-250"
             onClick={() => handleSort(accessor, isDateColumn)}
+            type="button"
           >
-            <img src={sortIcon} height={20} width={20} />
-          </div>
+            <img src={sortIcon} height={12} width={12} />
+          </button>
         )}
       </div>
     ));
@@ -140,7 +147,7 @@ function List(props: IList) {
 
   return (
     <div
-      className={`relative grid grid-cols-10  items-center justify-center border-2 rounded-md border-[#fbfcfe] h-[50vh] overflow-y-auto ${className} cursor-pointer hover:[&>img]:block bg-[#fbfcfe]`}
+      className={`relative grid grid-cols-10  items-center justify-center border-2 rounded-md border-[#fbfcfe] h-[200] max-h-[50vh] overflow-y-auto ${className} cursor-pointer hover:[&>img]:block bg-[#fbfcfe]`}
       id={id}
     >
       {/* render header with selectable functionality */}

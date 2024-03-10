@@ -9,7 +9,7 @@ function Checkbox({ label, id, onChecked, isChecked, className }: ICheckbox) {
       <input
         type="checkbox"
         id={id}
-        className="cursor-pointer h-[20px] w-[20px] border border-slate-200 rounded-md  focus:border-blue-700 outline-none"
+        className="cursor-pointer h-[20px] w-[20px] font-normal border border-slate-200 rounded-md  focus:border-blue-700 outline-none"
         onChange={(e) => {
           onChecked(e.target.checked);
         }}

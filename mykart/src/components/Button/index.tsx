@@ -26,14 +26,14 @@ const constructStyles = ({
         "border-none bg-[#fff] text-[#1a73e8] hover:underline hover:underline-offset-8 hover:decoration-[#1a73e8]",
     },
     danger: {
-      filled: "bg-red-400 text-red-200 rounded border-1 border-red-400",
+      filled: "bg-red-400 rounded border-1 border-red-400 text-[#fff]",
       outlined: "border border-1 rounded border-red-400 bg-[#fff] text-red-400",
       ghost:
         "border-none bg-[#fff] text-red-400 hover:underline hover:underline-offset-8 hover:decoration-red-400",
     },
     success: {
       filled:
-        "bg-emerald-400 text-emerald-200 rounded text-white border-1 border-emerald-400",
+        "bg-emerald-400  rounded text-white border-1 border-emerald-400 text-[#fff]",
       outlined:
         "border border-1 rounded border-emerald-400 bg-[#fff] text-emerald-400",
       ghost:

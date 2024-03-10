@@ -11,13 +11,16 @@ function FilterBar({
   products,
   handleDelete,
   enableDeleteBtn,
+  handleClear,
 }: {
   products: IProductData[];
   setProducts: (products: IProductData[]) => void;
   handleDelete: () => void;
   enableDeleteBtn: boolean;
+  handleClear: () => void;
 }) {
   const navigate = useNavigate();
+  const hasChanges = React.useRef<boolean>();
   const filterOptions = React.useMemo(() => catogeries, []);
   const [searchText, setSearchText] = React.useState<string>("");
   const [filter, setFilter] = React.useState<
@@ -26,8 +29,8 @@ function FilterBar({
 
   // applying category filter and then search text inside the filter category
   const handleApply = () => {
+    hasChanges.current = true;
     const ctgIds = filter?.map((ctg) => ctg.id);
-
     const filteredData = products
       .filter((pdt) => {
         if (ctgIds && ctgIds.length) ctgIds?.includes(pdt.category);
@@ -38,6 +41,16 @@ function FilterBar({
     setProducts(filteredData);
   };
 
+  // clears all search criteria and retains redux data
+  const onClearFilterData = React.useCallback(() => {
+
+    setSearchText('')
+    setFilter([]);
+    hasChanges.current = false;
+    handleClear();
+
+  }, [handleClear]);
+
   return (
     <div className="h-32 w-[100%] flex justify-between items-center p-4 border-1 rounded-md border-amber-200 mx-1 ">
       <div className="w-[60%] flex justify-start gap-4 items-center">
@@ -45,7 +58,7 @@ function FilterBar({
           value={searchText}
           onTextInputChange={(val) => setSearchText(val)}
           placeholderText="Search with product name..."
-          className="w-12"
+          className="w-10"
         />
         <Dropdown
           onSelect={(selectedOpt) => setFilter(() => selectedOpt)}
@@ -62,6 +75,16 @@ function FilterBar({
           disabled={!filter?.length && !searchText.length}
           size="sm"
         />
+
+        <Button
+          code="danger"
+          variant="filled"
+          onClick={onClearFilterData}
+          label="Clear Filters"
+          size="sm"
+          disabled={!hasChanges.current}
+        />
+
       </div>
 
       <div className="flex justify-end items-center gap-4">

@@ -6,10 +6,10 @@ export interface IListConfig {
   header?: string;
   accessor: string;
   render?: (data: IListData, customProperties?: any) => React.ReactNode | string | null;
-  isSortable?: boolean;
+  canSort?: boolean;
   hasFilter?: boolean;
   rowClassName?: string; 
-  isDateColumn?: "YYYY-MM-DD" & string;
+  isDateColumn?: "YYYY-MM-DD",
 }
 
 export interface IList {

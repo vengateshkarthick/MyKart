@@ -62,7 +62,7 @@ function Dropdown({
       
       <div className="h-6 w-full flex justify-start gap-2 items-center" ref={btnRef}>
       {label && (
-        <div className="text-sm font-normal w-auto font-[Poppins]">{label}</div>
+        <div className="text-sm font-normal w-auto font-[Poppins] text-nowrap">{label}</div>
       )}
         <Button
           label={conjuctStrings(optionsLabel) || "Select Option"}
