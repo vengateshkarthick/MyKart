@@ -4,16 +4,21 @@ import Dropdown from "../../components/Dropdown";
 import { catogeries } from "../../shared/constants/categories";
 import TextArea from "../../components/TextInput";
 import { IProductData } from "../../shared/list.type";
+import { useNavigate } from "react-router-dom";
 
 function FilterBar({
   setProducts,
   products,
-  handleDelete
+  handleDelete,
+  enableDeleteBtn,
 }: {
   products: IProductData[];
   setProducts: (products: IProductData[]) => void;
   handleDelete: () => void;
+  enableDeleteBtn: boolean; 
 }) {
+
+  const navigate = useNavigate(); 
   const filterOptions = React.useMemo(() => catogeries, []);
   const [searchText, setSearchText] = React.useState<string>("");
   const [filter, setFilter] = React.useState<
@@ -24,6 +29,7 @@ function FilterBar({
   // applying category filter and then search text inside the filter category
   const handleApply = () => {
     const ctgIds = filter?.map((ctg) => ctg.id);
+
     const filteredData = products
       .filter((pdt) => {
         if (ctgIds && ctgIds.length) ctgIds?.includes(pdt.category);
@@ -42,18 +48,20 @@ function FilterBar({
         options={filterOptions}
         isMultiSelect
         selected={filter}
+        label="Filter by Category"
       />
       <TextArea
         value={searchText}
-        onChange={(val) => setSearchText(val)}
+        onTextInputChange={(val) => setSearchText(val)}
         placeholderText="Search with product name..."
-        className="w-20"
+        className="w-12"
       />
       <Button
         code="primary"
         variant="filled"
         onClick={() => handleApply()}
         label="Apply"
+        disabled={!filter?.length && !searchText.length}
       />
 
       <Button 
@@ -61,8 +69,15 @@ function FilterBar({
         variant="outlined"
         onClick={() => handleDelete()}
         label="Remove"
+        disabled={enableDeleteBtn}
        />
 
+       <Button
+         code="success"
+         variant="outlined"
+         label="Add Product"
+         onClick={() => navigate("/form/create")}
+        />
     </div>
   );
 }

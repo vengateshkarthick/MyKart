@@ -7,5 +7,6 @@ export interface IButton {
     size?: "md" | "lg" | "xl" | "xs" | "sm";
     icon?: string;
     label?: string;
+    isSubmitBtn?: boolean
   }
   

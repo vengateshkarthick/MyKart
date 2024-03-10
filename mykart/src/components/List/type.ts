@@ -9,6 +9,7 @@ export interface IListConfig {
   isSortable?: boolean;
   hasFilter?: boolean;
   rowClassName?: string; 
+  isDateColumn?: "YYYY-MM-DD" & string;
 }
 
 export interface IList {

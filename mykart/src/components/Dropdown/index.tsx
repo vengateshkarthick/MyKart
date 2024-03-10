@@ -9,7 +9,7 @@ import { conjuctStrings } from '../../shared/display';
 import useOutsideClickHandler from '../../shared/hooks/useOutsideHandler';
 
 
-function Dropdown ({ selected, options, onSelect, isMultiSelect = false }: IDropdown) {
+function Dropdown ({ selected, options, onSelect, isMultiSelect = false, label }: IDropdown) {
   const [selectedOption, setSelectedOption] = useState<{ id: string, label: string }[]>(() => selected || []);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
@@ -43,6 +43,7 @@ function Dropdown ({ selected, options, onSelect, isMultiSelect = false }: IDrop
 
   return (
     <div className="relative inline-block text-left" ref={ref}>
+      {label && <div className="text-sm font-normal w-full font-[Poppins]">{label}</div>}
       <div className="h-6 w-10">
         <Button 
           label={ conjuctStrings(optionsLabel) || "Select Option"}

@@ -44,6 +44,6 @@ export const config = [
 ];
 
 
- export function getApiData() {
+export function getApiData() {
     return apiData;
  }

@@ -56,7 +56,7 @@ function Button(props: IButton) {
           props.onClick();
         }}
         tabIndex={-1}
-        type="button"
+        type={props.isSubmitBtn ? "submit" :"button"}
       >
         <div className="flex justify-center items-center gap-1">
           {props.label && <div className="text-sm">{props.label}</div>}

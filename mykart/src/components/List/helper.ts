@@ -12,11 +12,23 @@ const handleComparison = (
 };
 
 // sorting product data with string and number
-export const sortByData = (data?: IProductData[], field?: productKeys) => {
+export const sortByData = (data?: IProductData[], field?: productKeys, isDateColumn?: string) => {
+   let fieldData1;
+   let fieldData2;
+  if (isDateColumn && field) {
+    return data?.sort((a, b) => {
+      fieldData1 = new Date(a[field]?.toString() || "");
+      fieldData2 = new Date(b[field]?.toString() || "");
+
+      return Number(fieldData1.getMilliseconds()) - Number(fieldData2.getMilliseconds())
+
+    })
+  }
+   
   if (typeof field === "string") {
     return data?.sort((a, b) => {
-      let fieldData1 = a[field]?.toString().toUpperCase() as string;
-      let fieldData2 = b[field]?.toString().toUpperCase() as string;
+      fieldData1 = a[field]?.toString().toUpperCase() as string;
+      fieldData2 = b[field]?.toString().toUpperCase() as string;
 
       return handleComparison(fieldData1, fieldData2);
     });
@@ -24,8 +36,8 @@ export const sortByData = (data?: IProductData[], field?: productKeys) => {
 
   if (typeof field === "number") {
     return data?.sort((a, b) => {
-      let fieldData1 = a[field] as number;
-      let fieldData2 = b[field] as number;
+      fieldData1 = a[field] as number;
+      fieldData2 = b[field] as number;
 
       return handleComparison(fieldData1, fieldData2);
     });

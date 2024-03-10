@@ -6,7 +6,7 @@ function Checkbox({ label, id, onChecked, isChecked, className }: ICheckbox) {
     <div
       className={`flex justify-start items-center gap-2 h-full w-full cursor-pointer ${className}`}
     >
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && <label className="text-sm font-normal font-[Poppins] w-auto" htmlFor={id}>{label}</label>}
       <input
         type="checkbox"
         id={id}

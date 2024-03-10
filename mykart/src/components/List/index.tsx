@@ -98,17 +98,17 @@ function List(props: IList) {
     });
   };
 
-  const handleSort = (field: string | number) => {
-    const sortedData = sortByData(rowData as IProductData[], field as productKeys);
+  const handleSort = (field: string | number, isDateColumn?: string) => {
+    const sortedData = sortByData(rowData as IProductData[], field as productKeys, isDateColumn);
     setRowData(() => sortedData);
   }
  
   const renderListHeader = () => {
-    return config.map(({ header, isSortable, accessor }) => (
+    return config.map(({ header, isSortable, accessor, isDateColumn }) => (
       <div className="flex flex-1 items-center justify-start gap-1 bg-[#fbfcfe] cursor-pointer hover:[&>img]:block">
         <div className="text-sm font-normal truncate text-left">{header}</div>
         {isSortable && (
-          <div className="hidden" onClick={() => handleSort(accessor)}>
+          <div className="hidden" onClick={() => handleSort(accessor, isDateColumn )}>
             <img src={sortIcon} height={20} width={20} />
           </div>
         )}

@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import "./App.css";
+import ProductList from "./views/ProductList";
 
 function App() {
   return (
@@ -18,11 +19,11 @@ const routes = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: "/home",
-        element: <div>Product List</div>,
+        path: "home",
+        element: <ProductList />,
       },
       {
-        path: "/:id",
+        path: "form/:id",
         element: <div>Form</div>,
       },
     ],

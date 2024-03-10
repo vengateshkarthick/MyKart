@@ -6,6 +6,7 @@ import FilterBar from "./FilterBar";
 import { IProductData } from "../../shared/list.type";
 import { deleteProduct, setInitalProductList } from "../../reducer/store";
 import { config, getApiData } from "./helper";
+import ConfirmationModal from "../../components/ConfirmationModal";
 
 function ProductList() {
   const { product } = useSelector((state) => state) as {
@@ -14,6 +15,7 @@ function ProductList() {
 
   const [productCopy, setProductCopy] = React.useState<IProductData[]>();
   const [selectedId, setSelectedId] = React.useState<string[]>([]);
+  const [showModal, setShowModal] = React.useState<boolean>(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -29,19 +31,20 @@ function ProductList() {
   }, [product]);
 
   const handleEdit = (id: string) => {
-    navigate(`/${id}`);
+    navigate(`form/${id}`);
   };
 
   const handleDelete = () => {
-    dispatch(deleteProduct(selectedId));
+    setShowModal(true);
   }
 
   return (
-    <div className="h-full w-full flex flex-col gap-2">
+    <div className="h-[100vh] w-[100vw] flex flex-col gap-2">
       <FilterBar
         products={productCopy || []}
         setProducts={(prdts) => setProductCopy(prdts)}
         handleDelete={handleDelete}
+        enableDeleteBtn={!selectedId.length}
       />
       <Table
         config={config}
@@ -51,6 +54,13 @@ function ProductList() {
         canEdit
         handleEdit={(data) => handleEdit(data.id)}
         onSelectRow={(id) => setSelectedId(id)}
+      />
+
+      <ConfirmationModal 
+        onClose={() => setShowModal(false)}
+        open={showModal}
+        handleConfirm={() => dispatch(deleteProduct(selectedId))}
+        header="Please confirm to delete the selected records..."
       />
 
     </div>
