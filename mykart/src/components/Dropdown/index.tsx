@@ -12,10 +12,16 @@ function Dropdown({
   onSelect,
   isMultiSelect = false,
   label,
+  size = "md",
 }: IDropdown) {
   const [selectedOption, setSelectedOption] = useState<
     { id: string; label: string }[]
-  >(() => selected || []);
+  >([]);
+
+  React.useEffect(() => {
+   setSelectedOption(selected || [])
+  }, [selected])
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const btnRef = useRef<HTMLDivElement>(null);
@@ -70,19 +76,20 @@ function Dropdown({
           icon={dropdownIcon}
           variant="outlined"
           code="primary"
+          size={size}
         />
       </div>
 
       {isDropdownOpen && (
         <div
-          className="absolute h-64 overflow-y-auto top-10 flex flex-col gap-2 justify-start py-2 items-center w-full rounded-md shadow-2xl bg-white ring-black ring-opacity-5"
+          className="absolute h-48 z-20 overflow-y-auto top-10 flex flex-col gap-2 justify-start py-2 items-center w-full rounded-md shadow-2xl bg-white ring-black ring-opacity-5"
           role="menu"
           // style={dropdownPosition}
         >
           {options.map((option) => (
             <Checkbox
               label={option.label}
-              className="p-2 w-full text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+              className="p-2 ps-3 w-full text-sm"
               onChecked={(isChecked) => handleOptionClick(option, isChecked)}
               isChecked={
                 !!selectedOption.find(({ id }) => id === option.id) || false

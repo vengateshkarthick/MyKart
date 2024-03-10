@@ -22,6 +22,8 @@ function List(props: IList) {
   const [selectAll, setSelectAll] = React.useState<boolean>(false);
   const [selectedRows, setSelectedRows] = React.useState<string[]>([]);
 
+  const sortedRef = React.useRef<string[]>([]);
+
   const handleSelectedRows = React.useCallback(
     (rowIdx: string, isChecked: boolean) => {
       if (isChecked) setSelectedRows((prev) => [...prev, rowIdx]);
@@ -118,17 +120,26 @@ function List(props: IList) {
   };
 
   const handleSort = (field: string | number, isDateColumn?: string) => {
+    if (sortedRef.current.includes(field.toString())) {
+      sortedRef.current = sortedRef.current.filter(ref => ref !== field);
+    }
+    else {
+      sortedRef.current.push(field.toString());
+    }
+    
     const sortedData = sortByData(
       rowData as IProductData[],
       field as productKeys,
-      isDateColumn
+      isDateColumn,
+      sortedRef.current.includes(field.toString()),
+
     );
     setRowData(() => [...sortedData as IProductData[]]);
   };
 
   const renderListHeader = () => {
     return config.map(({ header, canSort, accessor, isDateColumn }) => (
-      <div className="flex justify-start items-center gap-2 p-2 hover:bg-orange-200">
+      <div className="flex justify-start items-center gap-2 p-2">
         <div className="text-sm font-normal truncate text-left">
           {header}
         </div>
@@ -151,14 +162,7 @@ function List(props: IList) {
       id={id}
     >
       {/* render header with selectable functionality */}
-      {isSelectable && (
-        <Checkbox
-          id="header-checkbox"
-          isChecked={selectAll}
-          onChecked={(slct) => setSelectAll(slct)}
-          className="p-4"
-        />
-      )}
+      <div></div>
       {renderListHeader()}
       <div></div>
       {renderListItem() || (

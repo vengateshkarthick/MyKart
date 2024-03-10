@@ -4,4 +4,5 @@ export interface ITextArea {
     className?: string;
     key?: string;
     placeholderText?: string;
+    label?: string
   }

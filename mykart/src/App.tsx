@@ -2,6 +2,7 @@ import React from "react";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import ProductList from "./views/ProductList";
+import CreateOrEditProduct from "./views/ProductForm";
 
 function App() {
   return (
@@ -23,7 +24,7 @@ const routes = createBrowserRouter([
       },
       {
         path: "form/:id",
-        element: <div>Form</div>,
+        element: <CreateOrEditProduct />,
       },
     ],
   },

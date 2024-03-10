@@ -27,16 +27,29 @@ function FilterBar({
     { id: string; label: string }[] | null
   >([]);
 
+  const productsRef = React.useRef<IProductData[]>([]);
+
   // applying category filter and then search text inside the filter category
   const handleApply = () => {
-    hasChanges.current = true;
+    let filteredData = [...products];
+    if (!hasChanges.current) {
+      hasChanges.current = true;
+      productsRef.current = [...products];
+    } else if (hasChanges.current) {
+      filteredData = [...productsRef.current]
+    }
     const ctgIds = filter?.map((ctg) => ctg.id);
-    const filteredData = products
-      .filter((pdt) => {
-        if (ctgIds && ctgIds.length) ctgIds?.includes(pdt.category);
-        else return true;
-      })
-      .filter((pdt) => pdt.name.includes(searchText));
+
+    
+
+    if (searchText.length) {
+     filteredData = filteredData.filter((pdt) => pdt.name.includes(searchText));
+    }
+
+    if (ctgIds && ctgIds.length) {
+      filteredData = filteredData.filter((pdt) => ctgIds.includes(pdt.category.toLowerCase()))
+    }
+
 
     setProducts(filteredData);
   };
@@ -44,9 +57,10 @@ function FilterBar({
   // clears all search criteria and retains redux data
   const onClearFilterData = React.useCallback(() => {
 
-    setSearchText('')
-    setFilter([]);
+    setSearchText('');
+    setFilter(() => []);
     hasChanges.current = false;
+    productsRef.current = [];
     handleClear();
 
   }, [handleClear]);

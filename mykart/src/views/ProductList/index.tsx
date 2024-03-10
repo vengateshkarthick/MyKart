@@ -31,7 +31,7 @@ function ProductList() {
   }, [product]);
 
   const handleEdit = (id: string) => {
-    navigate(`form/${id}`);
+    navigate(`/form/${id}`);
   };
 
   const handleDelete = () => {
