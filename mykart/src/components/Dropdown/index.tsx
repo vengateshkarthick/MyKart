@@ -31,10 +31,16 @@ function Dropdown({
     isChecked: boolean
   ) => {
     const opt = [...selectedOption];
-  
     if (isChecked) {
-      opt.push(option);
-    } else {
+      if (isMultiSelect) {
+        opt.push(option);
+      }
+      else {
+        opt.splice(0, 1);
+        opt.push(option)
+      }
+    }
+    else {
       const idx = opt?.findIndex((opt) => opt.id === option.id)
       opt.splice(idx, 1);
     }
@@ -77,6 +83,7 @@ function Dropdown({
           variant="outlined"
           code="primary"
           size={size}
+          noTranistion
         />
       </div>
 

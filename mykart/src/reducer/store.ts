@@ -7,7 +7,7 @@ export const productStore = createSlice({
   name: "prodcutStore",
   initialState: {
     product: [] as Array<IProductData>,
-    selctedProduct: {},
+    selectedProduct: new Object() as IProductData,
   },
   reducers: {
     setInitialProductList: (state, action) => {
@@ -26,6 +26,7 @@ export const productStore = createSlice({
       state.product[idx] = { ...rest, id };
       const updated_product = [...state.product];
       state.product = updated_product;
+      state.selectedProduct = new Object() as IProductData;
     },
     deleteProduct: (state, action) => {
       const { product: oldProductId } = state;
@@ -34,9 +35,11 @@ export const productStore = createSlice({
     },
 
     fetchProductDetails: (state, action) => {
-      const pdt = state.product.find((prd) => prd.id === action.payload);
-      if (pdt) state.selctedProduct = pdt;
-      else state.selctedProduct = {};
+      const pdt = state.product.findIndex((prd) => prd.id === action.payload)
+      console.log(pdt, action.payload)
+      if (pdt !== -1) state.selectedProduct = state.product[pdt];
+      else state.selectedProduct = {} as IProductData;
+      
     },
   },
 });

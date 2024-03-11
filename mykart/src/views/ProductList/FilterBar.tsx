@@ -36,38 +36,37 @@ function FilterBar({
       hasChanges.current = true;
       productsRef.current = [...products];
     } else if (hasChanges.current) {
-      filteredData = [...productsRef.current]
+      filteredData = [...productsRef.current];
     }
     const ctgIds = filter?.map((ctg) => ctg.id);
 
-    
-
     if (searchText.length) {
-     filteredData = filteredData.filter((pdt) => pdt.name.includes(searchText));
+      filteredData = filteredData.filter((pdt) =>
+        pdt.name.includes(searchText)
+      );
     }
 
     if (ctgIds && ctgIds.length) {
-      filteredData = filteredData.filter((pdt) => ctgIds.includes(pdt.category.toLowerCase()))
+      filteredData = filteredData.filter((pdt) =>
+        ctgIds.includes(pdt.category.toLowerCase())
+      );
     }
-
 
     setProducts(filteredData);
   };
 
   // clears all search criteria and retains redux data
   const onClearFilterData = React.useCallback(() => {
-
-    setSearchText('');
+    setSearchText("");
     setFilter(() => []);
     hasChanges.current = false;
     productsRef.current = [];
     handleClear();
-
   }, [handleClear]);
 
   return (
-    <div className="h-32 w-[100%] flex justify-between items-center p-4 border-1 rounded-md border-amber-200 mx-1 ">
-      <div className="w-[60%] flex justify-start gap-4 items-center">
+    <div className="relative top-5 my-4 h-32 w-[100%] flex justify-between items-center p-4 border-1 rounded-md border-amber-200 mx-1 ">
+      <div className="w-[70%] flex justify-start gap-4 items-center">
         <TextArea
           value={searchText}
           onTextInputChange={(val) => setSearchText(val)}
@@ -98,24 +97,15 @@ function FilterBar({
           size="sm"
           disabled={!hasChanges.current}
         />
-
       </div>
 
-      <div className="flex justify-end items-center gap-4">
+      <div className="flex justify-start items-center gap-4 mx-1 w-[20%]">
         <Button
           code="danger"
           variant="outlined"
           onClick={() => handleDelete()}
           label="Remove"
           disabled={enableDeleteBtn}
-          size="sm"
-        />
-
-        <Button
-          code="success"
-          variant="filled"
-          label="Add Product"
-          onClick={() => navigate("/form/create")}
           size="sm"
         />
       </div>

@@ -1,12 +1,25 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import ProductList from "./views/ProductList";
 import CreateOrEditProduct from "./views/ProductForm";
+import { setInitialProductList } from "./reducer/store";
+import { getApiData } from "./views/ProductList/helper";
+import Header from "./components/Header";
 
 function App() {
+  const dispatch = useDispatch();
+  const  product = useSelector((state:any) => state?.prodcuts?.product)
+  // updating store with local json data
+  React.useEffect(() => {
+    if (dispatch && !product.length) {
+      dispatch(setInitialProductList(getApiData()));
+    }
+  }, [dispatch, product])
   return (
-    <div className="h-full w-full">
+    <div className="h-full w-full flex flex-col gap-3">
+      <Header />
       <Outlet />
       <ToastContainer />
     </div>

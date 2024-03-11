@@ -6,6 +6,7 @@ const constructStyles = ({
   disabled = false,
   code = "primary",
   size = "sm",
+  noTranistion,
 }: Partial<IButton>) => {
   const pad = {
     xs: 2,
@@ -43,7 +44,7 @@ const constructStyles = ({
 
   return `${button_variants[code][variant]} ${common} ${
     disabled ? "opacity-50 cursor-not-allowed" : "opacity-100"
-  }`;
+  } ${disabled || noTranistion   ? " " : "transition ease-in-out delay-150 hover:scale-110"} `;
 };
 function Button(props: IButton) {
   return (

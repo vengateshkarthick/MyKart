@@ -9,6 +9,7 @@ function TextArea({
   key = '',
   placeholderText = 'search with product name...',
   label = "",
+  height,
   ...rest
 }: ITextArea & React.InputHTMLAttributes<Omit<HTMLInputElement, "date">>) {
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -30,7 +31,9 @@ function TextArea({
         onChange={(e) => handleChange(e)}
         placeholder={placeholderText}
         className="resize-none w-full rounded-none border-none text-sm placeholder:text-[#767D83] focus:outline-none"
+        tabIndex={-1}
         {...rest}
+        style={{ height }}
       />
      
     </div>

@@ -8,5 +8,6 @@ export interface IButton {
     icon?: string;
     label?: string;
     isSubmitBtn?: boolean
+    noTranistion?: boolean
   }
   

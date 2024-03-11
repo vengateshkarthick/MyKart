@@ -16,6 +16,7 @@ function CalendarPicker ({ onSelect, date, label, dontAllowPast = true }: ICalen
           onChange={e => handleChange(e.target.value)}
           value={date}
           min={dontAllowPast ? new Date().toISOString().slice(0, 10) : undefined}
+          placeholder='Select Date'
         />
       </div>
     )

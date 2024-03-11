@@ -10,19 +10,12 @@ import ConfirmationModal from "../../components/ConfirmationModal";
 import { IListConfig } from "../../components/List/type";
 
 function ProductList() {
-  const  product = useSelector((state:any) => state?.prodcuts?.product)
+  const product = useSelector((state: any) => state?.prodcuts?.product);
   const [productCopy, setProductCopy] = React.useState<IProductData[]>();
   const [selectedId, setSelectedId] = React.useState<string[]>([]);
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  // updating store with local json data
-  React.useEffect(() => {
-    if (dispatch && !product?.length) {
-      dispatch(setInitialProductList(getApiData()));
-    }
-  }, [dispatch, product]);
 
   React.useEffect(() => {
     if (product) {
@@ -36,20 +29,22 @@ function ProductList() {
 
   const handleDelete = () => {
     setShowModal(true);
-  }
+  };
 
   // const handleClose = () => {
 
   // }
 
   const handleConfirm = () => {
-    dispatch(deleteProduct(selectedId))
+    dispatch(deleteProduct(selectedId));
     setShowModal(false);
-  }
-
+  };
 
   return (
-    <div className="h-[100vh] w-[100vw] flex flex-col gap-2 container mx-auto">
+    <div className="relative top-10 h-[100vh] w-[100vw] flex flex-col gap-2 container mx-auto">
+      <article className="py-2 text-sm font-normal font-[Poppins] text-nowrap">
+        Product Table
+      </article>
       <FilterBar
         products={productCopy || []}
         setProducts={(prdts) => setProductCopy([...prdts])}
@@ -67,13 +62,12 @@ function ProductList() {
         onSelectRow={(id) => setSelectedId(id)}
       />
 
-      <ConfirmationModal 
+      <ConfirmationModal
         onClose={() => setShowModal(false)}
         open={showModal}
         handleConfirm={handleConfirm}
         header="Please confirm to delete the selected records..."
       />
-
     </div>
   );
 }
