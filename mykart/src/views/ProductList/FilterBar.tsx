@@ -70,7 +70,6 @@ function FilterBar({
 
   const onRemove = () => {
     handleDelete();
-    onClearFilterData();
   }
 
   return (
@@ -115,8 +114,9 @@ function FilterBar({
           variant="filled"
           onClick={() => onRemove()}
           label="Remove"
-          disabled={enableDeleteBtn}
+          disabled={!enableDeleteBtn}
           size="sm"
+          key="remove"
         />
       </div>
     </div>

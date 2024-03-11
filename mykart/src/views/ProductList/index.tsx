@@ -12,7 +12,7 @@ import { IListConfig } from "../../components/List/type";
 function ProductList() {
   const product = useSelector((state: any) => state?.prodcuts?.product);
   const [productCopy, setProductCopy] = React.useState<IProductData[]>();
-  const [selectedId, setSelectedId] = React.useState<string[]>([]);
+  const [selectedId, setSelectedId] = React.useState<string[] | null>(null);
   const [showModal, setShowModal] = React.useState<boolean>(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -36,18 +36,18 @@ function ProductList() {
   // }
 
   const handleConfirm = () => {
-    dispatch(deleteProduct(selectedId));
+    setSelectedId(null);
     setShowModal(false);
-    setSelectedId(() => []);
+    dispatch(deleteProduct(selectedId));
   };
 
   return (
-    <div className="h-full container flex flex-wrap gap-2 m-auto justify-center items-start ">
+    <div className="h-auto container flex flex-wrap gap-4 mx-auto justify-center items-start ">
       <FilterBar
         products={productCopy || []}
         setProducts={(prdts) => setProductCopy([...prdts])}
         handleDelete={handleDelete}
-        enableDeleteBtn={!selectedId.length}
+        enableDeleteBtn={!!selectedId}
         handleClear={() => setProductCopy([...product])}
       />
       <Table

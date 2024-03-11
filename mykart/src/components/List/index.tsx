@@ -158,7 +158,7 @@ function List(props: IList) {
 
   return (
     <div
-      className={`relative grid grid-cols-10 w-full items-center justify-center border-2 rounded-md border-[#fbfcfe] h-[200] max-h-[50vh] overflow-y-auto ${className} cursor-pointer hover:[&>img]:block bg-[#fbfcfe]`}
+      className={`relative grid grid-cols-10 w-full items-start justify-center border-2 rounded-md border-[#fbfcfe] h-[200] max-h-[50vh] overflow-y-auto ${className} cursor-pointer hover:[&>img]:block bg-[#fbfcfe]`}
       id={id}
     >
       {/* render header with selectable functionality */}

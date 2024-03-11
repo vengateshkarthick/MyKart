@@ -60,7 +60,7 @@ function Button(props: IButton) {
         type={props.isSubmitBtn ? "submit" :"button"}
       >
         <div className="flex justify-center items-center gap-1">
-          {props.label && <div className="text-sm truncate max-w-[140px]">{props.label}</div>}
+          {props.label && <div className="text-sm truncate w-[100px] max-w-[100px]">{props.label}</div>}
           {props.icon && <img src={props.icon} height={15} width={15} alt="btn-icon"/>}
         </div>
       </button>

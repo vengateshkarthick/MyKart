@@ -184,7 +184,7 @@ function CreateOrEditProduct() {
           />
         </article>
 
-        <div className="flex justify-start items-start w-full gap-2">
+        <div className="flex justify-start items-start w-full gap-4">
           <div className="flex flex-col gap-5 items-start justify-start">
             <div className="font-normal text-left text-sm font-[Poppins]">
               Select Category
