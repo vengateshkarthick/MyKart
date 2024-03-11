@@ -85,10 +85,21 @@ function CreateOrEditProduct() {
   };
 
   const handleSubmit: React.FormEventHandler<HTMLFormElement> = (e) => {
-    e?.preventDefault();
-    if (
-      requiredFields.every((field) => Boolean(formData?.[field as productKeys]))
-    ) {
+    const isValid = requiredFields.every((field) => Boolean(formData?.[field as productKeys]));
+
+    if (!isValid) {
+      toast("Please fill all the detials ...",  {
+        position: "top-right",
+        type: "error",
+        theme: "light",
+        autoClose: 1000,
+       });
+
+      return ;
+    }
+
+    else {
+      e?.preventDefault();
       const payload = createPayload(formData);
       if (id === "create") {
         onCreateProduct(payload);
@@ -96,6 +107,8 @@ function CreateOrEditProduct() {
         onUpdateProduct(payload);
       }
     }
+
+    
   };
 
   const handleFormChange = (field: string, value: any) => {
@@ -117,10 +130,6 @@ function CreateOrEditProduct() {
     handleFormChange("final_price", (formData.sp - discount_amount).toString());
   };
 
-  const submuitBtnLabel = selectedProduct?.id ? "Update" : "Save";
-
-  const today = new Date().toISOString().slice(0, 10);
-
   const handleNumericInput: React.KeyboardEventHandler<
     Omit<HTMLInputElement, "date">
   > = (e) => {
@@ -132,8 +141,8 @@ function CreateOrEditProduct() {
   };
 
   return (
-    <div className="relative top-10 m-auto h-[80vh] w-[80vw] flex justify-start items-center border rounded-md border-slate-300">
-      <div className="h-full w-[40%]">
+    <div className="m-auto h-[80vh] w-[80vw] flex justify-start items-center border rounded-md border-slate-300">
+      <div className="h-full w-[45%]">
         <img src={addProductIcon} alt="add product" className="h-full w-full" />
       </div>
       <form
@@ -168,7 +177,7 @@ function CreateOrEditProduct() {
             }
             value={formData?.description}
             required
-            className="border p-[1.5] border-slate-200 text-sm resize-none w-full focus:border-blue-700"
+            className="border p-2 border-slate-200 text-sm resize-none w-full focus:border-blue-700"
             placeholder="description"
             rows={3}
             maxLength={500}
@@ -176,7 +185,7 @@ function CreateOrEditProduct() {
         </article>
 
         <div className="flex justify-start items-start w-full gap-2">
-          <div className="flex flex-col gap-4 items-start justify-start">
+          <div className="flex flex-col gap-5 items-start justify-start">
             <div className="font-normal text-left text-sm font-[Poppins]">
               Select Category
             </div>
@@ -221,6 +230,7 @@ function CreateOrEditProduct() {
             label="Selling Price"
             placeholder=""
           />
+
           <TextInput
             label="Discount Percentage %"
             name="dp"
@@ -247,7 +257,7 @@ function CreateOrEditProduct() {
         />
 
         <Button
-          label={submuitBtnLabel}
+          label={selectedProduct?.id ? "Update" : "Save"}
           onClick={() => {}}
           isSubmitBtn
           variant="filled"

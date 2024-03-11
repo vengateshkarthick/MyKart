@@ -70,7 +70,7 @@ function Dropdown({
     }
   }, [btnRef?.current]);
   return (
-    <div className="relative inline-block text-left w-[300px]" ref={ref}>
+    <div className="relative inline-block text-left min-w-[200px] max-w-[250px]" ref={ref}>
       
       <div className="h-6 w-full flex justify-start gap-2 items-center" ref={btnRef}>
       {label && (

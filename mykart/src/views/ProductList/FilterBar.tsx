@@ -4,7 +4,7 @@ import Dropdown from "../../components/Dropdown";
 import { catogeries } from "../../shared/constants/categories";
 import TextArea from "../../components/TextInput";
 import { IProductData } from "../../shared/list.type";
-import { useNavigate } from "react-router-dom";
+
 
 function FilterBar({
   setProducts,
@@ -19,7 +19,7 @@ function FilterBar({
   enableDeleteBtn: boolean;
   handleClear: () => void;
 }) {
-  const navigate = useNavigate();
+
   const hasChanges = React.useRef<boolean>();
   const filterOptions = React.useMemo(() => catogeries, []);
   const [searchText, setSearchText] = React.useState<string>("");
@@ -32,12 +32,16 @@ function FilterBar({
   // applying category filter and then search text inside the filter category
   const handleApply = () => {
     let filteredData = [...products];
+
     if (!hasChanges.current) {
+
       hasChanges.current = true;
       productsRef.current = [...products];
+
     } else if (hasChanges.current) {
       filteredData = [...productsRef.current];
     }
+
     const ctgIds = filter?.map((ctg) => ctg.id);
 
     if (searchText.length) {
@@ -64,14 +68,19 @@ function FilterBar({
     handleClear();
   }, [handleClear]);
 
+  const onRemove = () => {
+    handleDelete();
+    onClearFilterData();
+  }
+
   return (
-    <div className="relative top-5 my-4 h-32 w-[100%] flex justify-between items-center p-4 border-1 rounded-md border-amber-200 mx-1 ">
+    <div className="my-2 h-28 w-full p-2 flex justify-between items-center border-1 rounded-md border-amber-200 ">
       <div className="w-[70%] flex justify-start gap-4 items-center">
         <TextArea
           value={searchText}
           onTextInputChange={(val) => setSearchText(val)}
           placeholderText="Search with product name..."
-          className="w-10"
+          className="w-[25%]"
         />
         <Dropdown
           onSelect={(selectedOpt) => setFilter(() => selectedOpt)}
@@ -79,6 +88,7 @@ function FilterBar({
           isMultiSelect
           selected={filter}
           label="Filter by Category"
+          size="sm"
         />
         <Button
           code="primary"
@@ -99,11 +109,11 @@ function FilterBar({
         />
       </div>
 
-      <div className="flex justify-start items-center gap-4 mx-1 w-[20%]">
+      <div className="flex justify-end items-center gap-4 mx-1 w-[20%]">
         <Button
           code="danger"
-          variant="outlined"
-          onClick={() => handleDelete()}
+          variant="filled"
+          onClick={() => onRemove()}
           label="Remove"
           disabled={enableDeleteBtn}
           size="sm"

@@ -18,7 +18,7 @@ function App() {
     }
   }, [dispatch, product])
   return (
-    <div className="h-full w-full flex flex-col gap-3">
+    <div className="h-full w-full flex flex-col gap-3 justify-start items-center flex-1">
       <Header />
       <Outlet />
       <ToastContainer />

@@ -38,13 +38,11 @@ function ProductList() {
   const handleConfirm = () => {
     dispatch(deleteProduct(selectedId));
     setShowModal(false);
+    setSelectedId(() => []);
   };
 
   return (
-    <div className="relative top-10 h-[100vh] w-[100vw] flex flex-col gap-2 container mx-auto">
-      <article className="py-2 text-sm font-normal font-[Poppins] text-nowrap">
-        Product Table
-      </article>
+    <div className="h-full container flex flex-wrap gap-2 m-auto justify-center items-start ">
       <FilterBar
         products={productCopy || []}
         setProducts={(prdts) => setProductCopy([...prdts])}

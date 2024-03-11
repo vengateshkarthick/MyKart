@@ -27,7 +27,7 @@ const constructStyles = ({
         "border-none bg-[#fff] text-[#1a73e8] hover:underline hover:underline-offset-8 hover:decoration-[#1a73e8]",
     },
     danger: {
-      filled: "bg-red-400 rounded border-1 border-red-400 text-[#fff]",
+      filled: "bg-red-500 rounded border-1 border-red-400 text-[#fff]",
       outlined: "border border-1 rounded border-red-400 bg-[#fff] text-red-400",
       ghost:
         "border-none bg-[#fff] text-red-400 hover:underline hover:underline-offset-8 hover:decoration-red-400",
